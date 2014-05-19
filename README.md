@@ -7,7 +7,7 @@ Full XML corpus publishing system developped at ENS Lyon (http://ahn.ens-lyon.fr
 Installation
 ------------
 ```bash
-    cd <path_to_basex>/webapp
+    cd <{path_to_basex}>/webapp
     rm -fr *
     git clone https://github.com/ahn-ens-lyon/synopsx.git .
 ```
@@ -22,6 +22,7 @@ Configuration
 
 If you use the BaseX Client use the default syntax : http://docs.basex.org/wiki/Commands
 You can also use the command line syntax : http://docs.basex.org/wiki/REST#Command_Line
+(Change the informations between curl-braces with your own informations)
 
 
 #### Config database
@@ -41,25 +42,25 @@ You can also use the command line syntax : http://docs.basex.org/wiki/REST#Comma
 
 #### Project database
 
-`CREATE DB 'myproject'`
+`CREATE DB '{myproject}'`
 
-`OPEN DB 'myproject'`
+`OPEN DB '{myproject}'`
 
-`ADD myproject_data.xml` (or ADD TO 'myproject/' myproject_data.zip)
+`ADD {myproject_data.xml}` (or ADD TO '{myproject}/' {myproject_data.zip})
 
 `OPEN DB 'config'`
 
-`ADD myproject.xml`
+`ADD {myproject.xml}`
 
 ```xml
-    <!-- config file for 'myproject' -->
-    <configuration name="myproject">
+    <!-- config file for '{myproject}' -->
+    <configuration name="{myproject}">
         <!-- The @value attribute gives the parent xqm module namespace -->
         <parent value="synopsx"/>  
         <!-- The @value attribute gives the output xqm module namespace -->
-        <output name="html" value="myproject"/>  
+        <output name="html" value="{myproject}"/>  
         <!-- Uncomment this line to overwrite synopx oai default functions -->
-        <!--<output name="oai" value="myproject_oai_namespace"/>-->
+        <!--<output name="oai" value="{myproject_oai_namespace}"/>-->
     </configuration>
 ```
 
@@ -92,12 +93,12 @@ You can also interact with BaseX with the XQuery syntax for the installation pro
 
 ```xquery
     <!-- create the project database (http://docs.basex.org/wiki/Database_Module#db:create) -->
-    db:create("myproject")
+    db:create("{myproject}")
 ```
 
 ```xquery
     <!-- open the project database (http://docs.basex.org/wiki/Database_Module#db:open) -->
-    db:open("myproject")
+    db:open("{myproject}")
 ```
 
 ```xquery
@@ -116,12 +117,12 @@ You can also interact with BaseX with the XQuery syntax for the installation pro
     db:open("config")
 
     db:add("config",
-    <configuration name="myproject">
+    <configuration name="{myproject}">
         <!-- The @value attribute gives the parent xqm module namespace -->
         <parent value="synopsx"/>  
         <!-- The @value attribute gives the output xqm module namespace -->
-        <output name="html" value="myproject"/>  
+        <output name="html" value="{myproject}"/>  
         <!-- Uncomment this line to overwrite synopx oai default functions -->
         <!--<output name="oai" value="myproject_oai_namespace"/>-->
-    </configuration>, "myproject.xml" )
+    </configuration>, "{myproject.xml}" )
 ```
