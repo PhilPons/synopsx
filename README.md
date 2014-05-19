@@ -22,6 +22,7 @@ Configuration
 
 If you use the BaseX Client use the default syntax : http://docs.basex.org/wiki/Commands
 You can also use the command line syntax : http://docs.basex.org/wiki/REST#Command_Line
+
 (Change the informations between curl-braces with your own informations)
 
 
