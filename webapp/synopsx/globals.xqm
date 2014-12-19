@@ -41,7 +41,7 @@ declare variable $G:_RESTXQ := $G:SYNOPSX_DIR || '/synopsx/_restxq/';
 declare variable $G:MODELS :=  $G:SYNOPSX_DIR || '/synopsx/models/';
 declare variable $G:TEMPLATES :=  $G:SYNOPSX_DIR || '/synopsx/templates/';
 declare variable $G:VIEWS :=  $G:SYNOPSX_DIR || '/synopsx/views/';
-declare variable $G:PROJECTS :=  $G:SYNOPSX_DIR || '/synopsx/projects/';
+declare variable $G:PROJECTS :=  $G:SYNOPSX_DIR || '/gdpWebapp/';
 
 (: Section dedicated to databases, specificities of a project:)
 declare variable $G:DBNAME := 'gdp';
