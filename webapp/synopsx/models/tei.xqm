@@ -378,7 +378,6 @@ declare function getUrl($content as element()*, $lang as xs:string){
 };
 
 
-
 (:~
  : This function return the corpus title
  :)
@@ -392,3 +391,6 @@ declare function title() as element(){
 declare function listItems() as element()* { 
   db:open($G:DBNAME)//tei:titleStmt/tei:title
 };
+
+
+
