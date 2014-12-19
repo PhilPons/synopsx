@@ -23,7 +23,7 @@ module namespace synopsx.mappings.htmlWrapping = 'synopsx.mappings.htmlWrapping'
  :
  :)
 
-import module namespace G = "synopsx.globals" at '../globals.xqm';
+import module namespace G = "synopsx.globals" at '../../synopsx/globals.xqm';
 
 
 (: use to avoid to prefix functions name:)
