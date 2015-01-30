@@ -34,7 +34,7 @@ declare default function namespace 'synopsx.blog';
 
 (:~
  : resource function for the blog
- : 
+ : @return redirect to the blog's home
 :)
 declare 
   %restxq:path('/blog')
@@ -45,7 +45,7 @@ function blog(){
 
 (:~
  : resource function for the blog home
- : 
+ : @return a reverse list of blog entries
 :)
 declare 
   %restxq:path('/blog/home')
@@ -60,11 +60,11 @@ function home(){
 
 (:~
  : resource function for a blog entry
- : 
+ : @return a blog entry
 :)
 declare 
   %restxq:path('/blog/{$entryId}')
-  %rest:produces("application/html")
+  %restxq:produces("application/html")
 function article($entryId as xs:string){
   let $data    := synopsx.models.tei:article($entryId)
   let $options := map {}
@@ -75,12 +75,15 @@ function article($entryId as xs:string){
 
 (:~
  : resource function for a blog entry
- : 
+ : @return a blog entry in xml
+ : @rmq content negociation, p.e. curl -H"Accept:application/xml" "http://localhost:8984/blog/gdpBio"
+ : @todo serialize the xml
 :)
 declare 
   %restxq:path('/blog/{$entryId}')
-  %rest:produces("application/xml")
-  %rest:produces("application/tei+xml")  
+  %restxq:method('xml')
+  %restxq:produces("application/xml")
+  %restxq:produces("application/tei+xml")  
 function articleXml($entryId as xs:string){
   let $lang := 'fr'
   let $data := synopsx.models.tei:getXmlTeiById($entryId) 
