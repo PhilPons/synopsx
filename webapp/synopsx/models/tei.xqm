@@ -27,11 +27,8 @@ import module namespace G = "synopsx.globals" at '../globals.xqm'; (: import glo
 
 declare default function namespace 'synopsx.models.tei'; (: This is the default namespace:)
 declare namespace tei = 'http://www.tei-c.org/ns/1.0'; (: Add namespaces :)
-<<<<<<< HEAD
-=======
- 
+
 declare variable $synopsx.models.tei:db := "gdp"; (: dbname TODO choose an implementation :)
->>>>>>> modification du nom de bdd
 
 (:~
  : This function creates a map of two maps : one for metadata, one for content data
