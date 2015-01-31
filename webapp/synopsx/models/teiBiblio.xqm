@@ -68,6 +68,7 @@ declare function dispatch($node as node()*, $options) as item()* {
     case element(tei:biblStruct) | element(tei:bibl) return biblItem($node, $options)
     case element(tei:analytic) return getAnalytic($node, $options)
     case element(tei:monogr) return getMonogr($node, $options)
+    case element(tei:edition) return getEdition($node, $options)
     (: case element(tei:author) return getResponsability($node, $options) :)
     (: case element(tei:editor) return getResponsability($node, $options) :)
     case element(tei:persName) return persName($node, $options)
@@ -84,11 +85,11 @@ declare function passthru($nodes as node()*, $options) as item()* {
 };
 
 declare function listBibl($node, $options) {
-  <ul>{passthru($node, $options)}</ul>
+  <ul id="{$node/@xml:id}">{passthru($node, $options)}</ul>
 };
 
 declare function biblItem($node, $options) {
-   <li>{ passthru($node, $options) }</li>
+   <li id="{$node/@xml:id}">{ passthru($node, $options) }</li>
 };
 
 
@@ -105,25 +106,10 @@ declare function getAnalytic($node, $options) {
  : This function treats tei:monogr
  :)
 declare function getMonogr($node, $options) {
-  getResponsabilities($node, $options), 
+  getResponsabilities($node, $options),
   getTitle($node, $options),
-  getEdition($node, $options)
-};
-
-(:~
- : This function returns title in an html element
- : different html element whereas it is an analytic or a monographic title
- : @todo do we keep html serialisation here ?
- :)
-declare function getTitle($node, $options) {
-  for $title in $node/tei:title
-  return if ($title[@level='a'])
-    then <span class="title">« {$title} »</span>
-    else <em class="title">{$title}</em>
-};
-
-declare function getEdition($node, $options) {
-  passthru($node, $options)
+  getEdition($node/node(), $options),
+  getImprint($node/node(), $options)
 };
 
 
@@ -135,7 +121,7 @@ declare function getEdition($node, $options) {
 declare function getResponsabilities($node, $options) {
   for $responsability at $count in $node/tei:author | $node/tei:editor
   let $nbResponsabilities := fn:count($node/tei:author | $node/tei:editor)
-  return if ($count = $nbResponsabilities) then (getResponsability($responsability, $options), '.')
+  return if ($count = $nbResponsabilities) then (getResponsability($responsability, $options), '. ')
     else (getResponsability($responsability, $options), ' ; ')
 };
 
@@ -163,6 +149,40 @@ declare function getName($node, $options) {
   else if ($node/tei:surname) then <span class="smallcaps">{$node/tei:surname/text()}</span>
   else if ($node/tei:forename) then $node/tei:surname/text()
   else passthru($node, $options)
+};
+
+(:~
+ : This function returns title in an html element
+ : different html element whereas it is an analytic or a monographic title
+ : @todo serialize the text properly for tei:hi, etc.
+ :)
+declare function getTitle($node, $options) {
+  for $title in $node/tei:title
+  let $separator := '. '
+  return if ($title[@level='a'])
+    then (<span class="title">« {$title/text()} »</span>, $separator)
+    else (<em class="title">{$title/text()}</em>, $separator)
+};
+
+declare function getEdition($node, $options) {
+  $node/tei:edition/text()
+};
+
+declare function getMeeting($node, $options) {
+  $node/tei:meeting/text()
+};
+
+declare function getImprint($node, $options) {
+  for $vol in $node/tei:biblScope[@type='vol']
+  return $vol, 
+  for $pubPlace in $node/tei:pubPlace
+  return 
+    if ($pubPlace) then ($pubPlace/text(), ' : ')
+    else 's.l. :',
+  for $publisher in $node/tei:publisher
+  return 
+    if ($publisher) then ($publisher/text(), ', ')
+    else 's.p.'
 };
 
 declare %restxq:path('/biblio') 
