@@ -126,7 +126,7 @@ declare function getResponsabilities($node, $options) {
 };
 
 (:~
- : si le dernier auteur mettre un séparateur à la fin.
+ : si le dernier auteur mettre un séparateur à la fin
  :
  :)
 declare function getResponsability($node, $options) {
