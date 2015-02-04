@@ -119,8 +119,8 @@ declare function getMonogr($node, $options) {
  : @toto "éd." vs "éds."
  :)
 declare function getResponsabilities($node, $options) {
-  for $responsability at $count in $node/tei:author | $node/tei:editor
   let $nbResponsabilities := fn:count($node/tei:author | $node/tei:editor)
+  for $responsability at $count in $node/tei:author | $node/tei:editor
   return if ($count = $nbResponsabilities) then (getResponsability($responsability, $options), '. ')
     else (getResponsability($responsability, $options), ' ; ')
 };
